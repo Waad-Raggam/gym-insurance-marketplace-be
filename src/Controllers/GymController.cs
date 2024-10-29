@@ -69,5 +69,18 @@ namespace src.Controllers
 
             return Ok(gym);
         }
+
+        [HttpPut("Update/{id}")]
+        public async Task<ActionResult<GymReadDto>> UpdateGym(Guid id, [FromBody] GymUpdateDto updateDto)
+        {
+            var updatedGym = await _gymService.UpdateOneAsync(id, updateDto);
+
+            if (updatedGym == null)
+            {
+                return NotFound("Gym not found.");
+            }
+
+            return Ok(updatedGym);
+        }
     }
 }
