@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using src.Services.cart;
 using Microsoft.AspNetCore.Mvc;
-using static src.DTO.CartDTO;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using static src.DTO.CartDTO;
 
 namespace src.Controllers
 {

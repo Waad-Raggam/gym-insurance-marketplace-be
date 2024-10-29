@@ -26,6 +26,7 @@ namespace src.Database
         public DbSet<Gemstones> Gemstones { get; set; }
         public DbSet<Jewelry> Jewelry { get; set; }
         public DbSet<Payment> Payment { get; set; }
+        public DbSet<Gym> Gym { get; set; }
 
         // public DbSet<PaymentCard> PaymentCard { get; set; }
 
