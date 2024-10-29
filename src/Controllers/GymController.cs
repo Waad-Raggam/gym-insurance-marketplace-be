@@ -56,5 +56,18 @@ namespace src.Controllers
 
             return Ok(gyms);
         }
+
+         [HttpGet("{id}")]
+        public async Task<ActionResult<GymReadDto>> GetGym(Guid id)
+        {
+            var gym = await _gymService.GetByIdAsync(id);
+
+            if (gym == null)
+            {
+                return NotFound("Gym not found.");
+            }
+
+            return Ok(gym);
+        }
     }
 }
