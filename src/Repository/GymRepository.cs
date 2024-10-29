@@ -26,5 +26,10 @@ namespace src.Repository
         {
             return await _gym.ToListAsync();
         }
+
+        public async Task<Gym?> GetByIdAsync(Guid id)
+        {
+            return await _gym.FindAsync(id);
+        }
     }
 }
