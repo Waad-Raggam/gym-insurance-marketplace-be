@@ -43,5 +43,18 @@ namespace src.Controllers
 
             return Ok(gymCreated);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<GymReadDto>>> GetAllGym()
+        {
+            var gyms = await _gymService.GetAllAsync();
+
+            if (gyms == null || gyms.Count == 0)
+            {
+                return NotFound("No gyms found.");
+            }
+
+            return Ok(gyms);
+        }
     }
 }
