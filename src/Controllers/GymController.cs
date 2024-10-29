@@ -34,7 +34,7 @@ namespace src.Controllers
             // // string => Guid
             // var userGuid = new Guid(UserId);
 
-            var gymCreated = await _gymService.CreateOneAsync(createDto);
+            var gymCreated = await _gymService.CreateOnAsync(createDto);
 
             if (gymCreated == null)
             {
@@ -58,7 +58,7 @@ namespace src.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GymReadDto>> GetGym(Guid id)
+        public async Task<ActionResult<GymReadDto>> GetByIdAsync(Guid id)
         {
             var gym = await _gymService.GetByIdAsync(id);
 
