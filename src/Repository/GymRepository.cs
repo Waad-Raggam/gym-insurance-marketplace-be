@@ -38,5 +38,12 @@ namespace src.Repository
             await _databaseContext.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> UpdateOnAsync(Gym updateGym)
+        {
+            _gym.Update(updateGym);
+            await _databaseContext.SaveChangesAsync();
+            return true;
+        }
     }
 }
