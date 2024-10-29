@@ -21,5 +21,10 @@ namespace src.Repository
             await _databaseContext.SaveChangesAsync();
             return newGym;
         }
+
+        public async Task<List<Gym>> GetAllAsync()
+        {
+            return await _gym.ToListAsync();
+        }
     }
 }
