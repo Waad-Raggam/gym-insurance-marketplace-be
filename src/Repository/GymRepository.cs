@@ -15,5 +15,11 @@ namespace src.Repository
             _gym = databaseContext.Set<Gym>();
         }
 
+        public async Task<Gym> CreateOnAsync(Gym newGym)
+        {
+            await _gym.AddAsync(newGym);
+            await _databaseContext.SaveChangesAsync();
+            return newGym;
+        }
     }
 }
