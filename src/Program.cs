@@ -22,6 +22,7 @@ using src.Utils;
 //using src.Services.OrderGemstone;
 using src.Services.Order;
 using src.Middlewares;
+using src.Services.Gym;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -91,6 +92,10 @@ builder.Services
     .AddScoped<IOrderService, OrderService>()
     .AddScoped<OrderRepository, OrderRepository>();
 
+//Gym
+builder.Services
+    .AddScoped<IGymService, GymService>()
+    .AddScoped<GymRepository, GymRepository>();
 
 builder
     .Services.AddAuthentication(options =>
