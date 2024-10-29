@@ -31,5 +31,12 @@ namespace src.Repository
         {
             return await _gym.FindAsync(id);
         }
+
+        public async Task<bool> DeleteOnAsync(Gym gym)
+        {
+            _gym.Remove(gym);
+            await _databaseContext.SaveChangesAsync();
+            return true;
+        }
     }
 }
