@@ -34,7 +34,7 @@ namespace src.Controllers
             // // string => Guid
             // var userGuid = new Guid(UserId);
 
-            var gymCreated = await _gymService.CreateOneAsync( createDto);
+            var gymCreated = await _gymService.CreateOneAsync(createDto);
 
             if (gymCreated == null)
             {
@@ -57,7 +57,7 @@ namespace src.Controllers
             return Ok(gyms);
         }
 
-         [HttpGet("{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<GymReadDto>> GetGym(Guid id)
         {
             var gym = await _gymService.GetByIdAsync(id);
@@ -70,7 +70,8 @@ namespace src.Controllers
             return Ok(gym);
         }
 
-        [HttpPut("Update/{id}")]
+        // TODO: Add more fields to update gym info
+        [HttpPut("{id}")]
         public async Task<ActionResult<GymReadDto>> UpdateGym(Guid id, [FromBody] GymUpdateDto updateDto)
         {
             var updatedGym = await _gymService.UpdateOneAsync(id, updateDto);
@@ -81,6 +82,19 @@ namespace src.Controllers
             }
 
             return Ok(updatedGym);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteGym(Guid id)
+        {
+            var isDeleted = await _gymService.DeleteOneAsync(id);
+
+            if (!isDeleted)
+            {
+                return NotFound("Gym not found.");
+            }
+
+            return Ok("Gym deleted successfully.");
         }
     }
 }
