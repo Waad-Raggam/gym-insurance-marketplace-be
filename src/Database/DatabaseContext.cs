@@ -27,6 +27,7 @@ namespace src.Database
         public DbSet<Jewelry> Jewelry { get; set; }
         public DbSet<Payment> Payment { get; set; }
         public DbSet<Gym> Gym { get; set; }
+        public DbSet<InsurancePlan> InsurancePlan { get; set; }
 
         // public DbSet<PaymentCard> PaymentCard { get; set; }
 
@@ -44,6 +45,38 @@ namespace src.Database
                 .WithOne(o => o.Payment)
                 .HasForeignKey<Payment>(p => p.OrderId);
             modelBuilder.HasPostgresEnum<Role>();
+
+            modelBuilder.Entity<InsurancePlan>().HasData(
+           new InsurancePlan(1, "Basic Plan", 30m, "Basic Coverage", "Accidental injuries, Limited access to gym facilities, 24/7 customer support"),
+           new InsurancePlan(2, "Standard Plan", 50m, "Comprehensive Coverage", "Accidental injuries, Gym facility access, Personal trainer sessions, Nutrition consultations, 24/7 customer support"),
+           new InsurancePlan(3, "Premium Plan", 80m, "Premium Comprehensive", "Accidental injuries, Gym facility access, Unlimited personal trainer sessions, Nutrition consultations, Mental health support, Specialized fitness programs, 24/7 customer support")
+            );
+
+            // modelBuilder.Entity<InsurancePlan>().HasData(
+            //    new InsurancePlan
+            //    {
+            //        Id = 1,
+            //        PlanName = "Basic Plan",
+            //        MonthlyPremium = 30.00m,
+            //        CoverageType = "Basic Coverage",
+            //        CoverageDetails = "Accidental injuries, Limited access to gym facilities, 24/7 customer support"
+            //    },
+            //    new InsurancePlan
+            //    {
+            //        Id = 2,
+            //        PlanName = "Standard Plan",
+            //        MonthlyPremium = 50.00m,
+            //        CoverageType = "Comprehensive Coverage",
+            //        CoverageDetails = "Accidental injuries, Gym facility access, Personal trainer sessions, Nutrition consultations, 24/7 customer support"
+            //    },
+            //    new InsurancePlan
+            //    {
+            //        Id = 3,
+            //        PlanName = "Premium Plan",
+            //        MonthlyPremium = 80.00m,
+            //        CoverageType = "Premium Comprehensive",
+            //        CoverageDetails = "Accidental injuries, Gym facility access, Unlimited personal trainer sessions, Nutrition consultations, Mental health support, Specialized fitness programs, 24/7 customer support"
+            //    });
         }
     } // end class
 } // end namespace
