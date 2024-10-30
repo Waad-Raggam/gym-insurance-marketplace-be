@@ -10,6 +10,7 @@ using static src.DTO.CartDTO;
 using static src.DTO.CategoryDTO;
 using static src.DTO.GemstonesDTO;
 using static src.DTO.GymDTO;
+using static src.DTO.InsurancePlanDTO;
 using static src.DTO.JewelryDTO;
 using static src.DTO.OrderDTO;
 using static src.DTO.OrderGemstoneDTO;
@@ -125,6 +126,9 @@ namespace src.Utils
             // Mapping from GymUpdateDto to Gym with a condition to map properties only if they are not null
             CreateMap<GymUpdateDto, Gym>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+           CreateMap<InsurancePlan, InsurancePlanReadDto>();
+
         }
     } // end class
 } // end namespace

@@ -23,6 +23,7 @@ using src.Utils;
 using src.Services.Order;
 using src.Middlewares;
 using src.Services.Gym;
+using src.Services.InsurancePlan;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -96,6 +97,11 @@ builder.Services
 builder.Services
     .AddScoped<IGymService, GymService>()
     .AddScoped<GymRepository, GymRepository>();
+
+//Insurance plan
+builder.Services
+    .AddScoped<IInsurancePlan, InsurancePlanService>()
+    .AddScoped<InsurancePlanRepository, InsurancePlanRepository>();
 
 builder
     .Services.AddAuthentication(options =>
