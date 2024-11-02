@@ -8,6 +8,7 @@ namespace src.DTO
         // public string GymName { get; set; }
         // public int InsurancePlanId { get; set; }
         // public string InsurancePlanName { get; set; }
+        public int InsuranceId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public decimal PremiumAmount { get; set; }
@@ -17,7 +18,9 @@ namespace src.DTO
     {
         public Guid GIId { get; set; }
         public Guid GymId { get; set; }
+        public int InsuranceId { get; set; }
         public GymReadDto Gym { get; set; } // TODO: Include Gym information
+        public GymInsuranceReadDto InsurancePlan { get; set; } // TODO: Include insurance information
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public decimal PremiumAmount { get; set; }
@@ -26,7 +29,8 @@ namespace src.DTO
     public class GymInsuranceUpdateDto
     {
         // public int GymInsuranceId { get; set; }
-        public Guid GymId { get; set; }
+        // public Guid GymId { get; set; }
+        // public int InsuranceId { get; set; }
         // public string GymName { get; set; }
         // public int InsurancePlanId { get; set; }
         // public string InsurancePlanName { get; set; }

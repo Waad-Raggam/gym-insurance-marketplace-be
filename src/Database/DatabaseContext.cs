@@ -53,11 +53,18 @@ namespace src.Database
         new InsurancePlan(3, "Premium Plan", 80m, "Premium Comprehensive", "Accidental injuries, Gym facility access, Unlimited personal trainer sessions, Nutrition consultations, Mental health support, Specialized fitness programs, 24/7 customer support")
     );
 
-     modelBuilder.Entity<GymInsurance>()
-        .HasOne(gi => gi.Gym)
-        .WithMany() // TODO: specify a collection in Gym
-        .HasForeignKey(gi => gi.GymId)
-        .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<GymInsurance>()
+               .HasOne(gi => gi.Gym)
+               .WithMany() // TODO: specify a collection in Gym
+               .HasForeignKey(gi => gi.GymId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure InsurancePlan to GymInsurance relationship
+            modelBuilder.Entity<GymInsurance>()
+                .HasOne(gi => gi.InsurancePlan)
+                .WithMany() // TODO: specify a collection 
+                .HasForeignKey(gi => gi.InsuranceId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Define the Gym to GymInsurance relationship
             // modelBuilder.Entity<GymInsurance>()
