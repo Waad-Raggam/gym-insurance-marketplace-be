@@ -8,6 +8,6 @@ namespace src.Services.InsurancePlan
 
         Task<List<InsurancePlanReadDto>> GetAllInsurancePlansAsync();
 
-        Task<InsurancePlanReadDto> GetInsurancePlanByIdAsync(Guid id);
+        Task<InsurancePlanReadDto> GetInsurancePlanByIdAsync(int id);
     }
 }

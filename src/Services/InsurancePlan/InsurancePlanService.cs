@@ -25,7 +25,7 @@ public class InsurancePlanService : IInsurancePlan
     }
 
     // Fetch single insurance plan by Id
-    public async Task<InsurancePlanReadDto> GetInsurancePlanByIdAsync(Guid id)
+    public async Task<InsurancePlanReadDto> GetInsurancePlanByIdAsync(int id)
     {
         var planFound = await _planRepo.GetByIdAsync(id);
             if (planFound == null)
