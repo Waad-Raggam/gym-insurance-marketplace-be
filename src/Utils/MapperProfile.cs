@@ -129,6 +129,13 @@ namespace src.Utils
 
            CreateMap<InsurancePlan, InsurancePlanReadDto>();
 
+           CreateMap<GymInsurance, GymInsuranceReadDto>();
+            CreateMap<GymInsuranceCreateDto, GymInsurance>();
+            // Mapping from GymInsuranceUpdateDto to GymInsurance with a condition to map properties only if they are not null
+            CreateMap<GymInsuranceUpdateDto, GymInsurance>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+
         }
     } // end class
 } // end namespace

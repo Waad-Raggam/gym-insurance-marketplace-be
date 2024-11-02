@@ -24,6 +24,7 @@ using src.Services.Order;
 using src.Middlewares;
 using src.Services.Gym;
 using src.Services.InsurancePlan;
+using src.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -102,6 +103,11 @@ builder.Services
 builder.Services
     .AddScoped<IInsurancePlan, InsurancePlanService>()
     .AddScoped<InsurancePlanRepository, InsurancePlanRepository>();
+
+//Gym Insurance plan
+builder.Services
+    .AddScoped<IGymInsuranceService, GymInsuranceService>()
+    .AddScoped<GymInsuranceRepository, GymInsuranceRepository>();
 
 builder
     .Services.AddAuthentication(options =>

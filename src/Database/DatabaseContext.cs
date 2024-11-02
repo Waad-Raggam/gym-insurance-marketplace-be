@@ -28,6 +28,7 @@ namespace src.Database
         public DbSet<Payment> Payment { get; set; }
         public DbSet<Gym> Gym { get; set; }
         public DbSet<InsurancePlan> InsurancePlan { get; set; }
+        public DbSet<GymInsurance> GymInsurance { get; set; }
 
         // public DbSet<PaymentCard> PaymentCard { get; set; }
 
@@ -47,10 +48,22 @@ namespace src.Database
             modelBuilder.HasPostgresEnum<Role>();
 
             modelBuilder.Entity<InsurancePlan>().HasData(
-           new InsurancePlan(1, "Basic Plan", 30m, "Basic Coverage", "Accidental injuries, Limited access to gym facilities, 24/7 customer support"),
-           new InsurancePlan(2, "Standard Plan", 50m, "Comprehensive Coverage", "Accidental injuries, Gym facility access, Personal trainer sessions, Nutrition consultations, 24/7 customer support"),
-           new InsurancePlan(3, "Premium Plan", 80m, "Premium Comprehensive", "Accidental injuries, Gym facility access, Unlimited personal trainer sessions, Nutrition consultations, Mental health support, Specialized fitness programs, 24/7 customer support")
-            );
+        new InsurancePlan(1, "Basic Plan", 30m, "Basic Coverage", "Accidental injuries, Limited access to gym facilities, 24/7 customer support"),
+        new InsurancePlan(2, "Standard Plan", 50m, "Comprehensive Coverage", "Accidental injuries, Gym facility access, Personal trainer sessions, Nutrition consultations, 24/7 customer support"),
+        new InsurancePlan(3, "Premium Plan", 80m, "Premium Comprehensive", "Accidental injuries, Gym facility access, Unlimited personal trainer sessions, Nutrition consultations, Mental health support, Specialized fitness programs, 24/7 customer support")
+    );
+            // Define the Gym to GymInsurance relationship
+            // modelBuilder.Entity<GymInsurance>()
+            //     .HasOne(gi => gi.Gym)
+            //     .WithMany() // or .WithMany(g => g.GymInsurances) if Gym has a collection of GymInsurances
+            //     .HasForeignKey(gi => gi.GymId)
+            //     .OnDelete(DeleteBehavior.Cascade);
+
+            // modelBuilder.Entity<GymInsurance>()
+            //     .HasOne(gi => gi.InsurancePlan)
+            //     .WithMany() // or .WithMany(g => g.GymInsurances) if Gym has a collection of GymInsurances
+            //     .HasForeignKey(gi => gi.InsurancePlanId)
+            //     .OnDelete(DeleteBehavior.Cascade);
 
             // modelBuilder.Entity<InsurancePlan>().HasData(
             //    new InsurancePlan
