@@ -9,7 +9,7 @@ namespace src.DTO
         public class GymCreateDto
         {
             [Required]
-            public string BusinessName { get; set; }
+            public string GymName { get; set; }
 
             [Required]
             public string Location { get; set; }
@@ -41,7 +41,7 @@ namespace src.DTO
         {
             // public Guid InsuranceId { get; set; }
             public Guid GymId { get; set; }
-            public string BusinessName { get; set; }
+            public string GymName { get; set; }
             public string Location { get; set; }
             public string ContactName { get; set; }
             public string ContactPhone { get; set; }
@@ -58,7 +58,7 @@ namespace src.DTO
         {
             // public Guid InsuranceId { get; set; }
             public Guid GymId { get; set; }
-            public string BusinessName { get; set; }
+            public string GymName { get; set; }
         }
     }
 }
