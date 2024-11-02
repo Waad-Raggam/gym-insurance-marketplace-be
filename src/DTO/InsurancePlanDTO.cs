@@ -8,7 +8,7 @@ namespace src.DTO
     {
         public class InsurancePlanReadDto
         {
-            public Guid InsuranceId { get; set; }
+            public int insuranceId { get; set; }
             public string PlanName { get; set; }
             public decimal MonthlyPremium { get; private set; }
             public string CoverageType { get; private set; }
