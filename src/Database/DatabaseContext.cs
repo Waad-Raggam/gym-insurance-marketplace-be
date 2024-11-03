@@ -48,9 +48,9 @@ namespace src.Database
             modelBuilder.HasPostgresEnum<Role>();
 
             modelBuilder.Entity<InsurancePlan>().HasData(
-        new InsurancePlan(1, "Basic Plan", 30m, "Basic Coverage", "Accidental injuries, Limited access to gym facilities, 24/7 customer support"),
-        new InsurancePlan(2, "Standard Plan", 50m, "Comprehensive Coverage", "Accidental injuries, Gym facility access, Personal trainer sessions, Nutrition consultations, 24/7 customer support"),
-        new InsurancePlan(3, "Premium Plan", 80m, "Premium Comprehensive", "Accidental injuries, Gym facility access, Unlimited personal trainer sessions, Nutrition consultations, Mental health support, Specialized fitness programs, 24/7 customer support")
+        new InsurancePlan(1, "Basic Plan", 30m, "Basic Coverage", new List<string> { "General Liability Insurance", "Workers’ Compensation Insurance" }),
+        new InsurancePlan(2, "Standard Plan", 50m, "Comprehensive Coverage", new List<string> { "General Liability", "Workers’ Compensation", "Professional Liability" }),
+        new InsurancePlan(3, "Premium Plan", 80m, "Premium Comprehensive", new List<string> { "General Liability", "Workers’ Compensation", "Professional Liability", "Business interruption insurance", "Commercial property insurance" })
     );
 
             modelBuilder.Entity<GymInsurance>()
