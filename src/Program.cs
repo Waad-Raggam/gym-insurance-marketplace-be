@@ -109,6 +109,18 @@ builder.Services
     .AddScoped<IGymInsuranceService, GymInsuranceService>()
     .AddScoped<GymInsuranceRepository, GymInsuranceRepository>();
 
+//CORS
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options => {
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+    policy => {
+        policy.WithOrigins("http://localhost:3000").AllowAnyHeader()
+        .AllowAnyMethod()
+        .SetIsOriginAllowed((host)=>true)
+        .AllowCredentials();
+    });
+});
+
 builder
     .Services.AddAuthentication(options =>
     {
@@ -137,6 +149,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+// Add CORS middleware to the request pipeline
+app.UseCors(MyAllowSpecificOrigins);
+app.UseAuthentication();
+app.UseAuthorization();
 
 using (var scope = app.Services.CreateScope())
 {
