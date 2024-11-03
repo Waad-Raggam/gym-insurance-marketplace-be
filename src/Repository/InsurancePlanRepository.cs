@@ -20,7 +20,7 @@ namespace src.Repository
             return await _insurancePlan.ToListAsync();
         }
 
-        public async Task<InsurancePlan?> GetByIdAsync(Guid id)
+        public async Task<InsurancePlan?> GetByIdAsync(int id)
         {
             return await _insurancePlan.FindAsync(id);
         }

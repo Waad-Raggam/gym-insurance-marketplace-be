@@ -38,7 +38,7 @@ namespace src.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<InsurancePlanReadDto>> GetPlanByIdAsync(Guid id)
+        public async Task<ActionResult<InsurancePlanReadDto>> GetPlanByIdAsync(int id)
         {
             var plan = await _planService.GetInsurancePlanByIdAsync(id);
 

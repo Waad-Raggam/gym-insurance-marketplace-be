@@ -11,7 +11,7 @@ namespace src.Entity
         public Guid GymId { get; set; }
 
         [Required]
-        public string BusinessName { get; set; }
+        public string GymName { get; set; }
 
         [Required]
         public string Location { get; set; }

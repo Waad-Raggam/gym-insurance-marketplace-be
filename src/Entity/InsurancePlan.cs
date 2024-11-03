@@ -7,20 +7,22 @@ namespace src.Entity
 {
     public class InsurancePlan
     {
-        public int Id { get; private set; }
-        public string PlanName { get; private set; }
-        public decimal MonthlyPremium { get; private set; }
-        public string CoverageType { get; private set; }
-        public string CoverageDetails { get; private set; }
+        [Key]
+        public int InsuranceId { get; set; }
+        public string PlanName { get; set; }
+        public decimal MonthlyPremium { get; set; }
+        public string CoverageType { get; set; }
+        public string CoverageDetails { get; set; }
 
         public InsurancePlan(int id, string planName, decimal monthlyPremium, string coverageType, string coverageDetails)
         {
-            Id = id;
+            InsuranceId = id;
             PlanName = planName;
             MonthlyPremium = monthlyPremium;
             CoverageType = coverageType;
             CoverageDetails = coverageDetails;
         }
+        private InsurancePlan() { }
     }
 
 }
