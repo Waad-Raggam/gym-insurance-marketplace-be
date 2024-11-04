@@ -48,9 +48,9 @@ namespace src.Database
             modelBuilder.HasPostgresEnum<Role>();
 
             modelBuilder.Entity<InsurancePlan>().HasData(
-        new InsurancePlan(1, "Basic Plan", 30m, "Basic Coverage", new List<string> { "General Liability Insurance", "Workers’ Compensation Insurance" }),
-        new InsurancePlan(2, "Standard Plan", 50m, "Comprehensive Coverage", new List<string> { "General Liability", "Workers’ Compensation", "Professional Liability" }),
-        new InsurancePlan(3, "Premium Plan", 80m, "Premium Comprehensive", new List<string> { "General Liability", "Workers’ Compensation", "Professional Liability", "Business interruption insurance", "Commercial property insurance" })
+        new InsurancePlan(1, "GymBasic", 30m, "Basic Coverage", "Designed to cover essential liabilities, offering peace of mind for everyday operations so you can focus on training.", new List<string> { "General Liability Insurance", "Workers’ Compensation Insurance" }),
+        new InsurancePlan(2, "GymStandard", 50m, "Comprehensive Coverage", "Provides comprehensive liability coverage for both general and professional risks, plus options to protect your equipment and more for a safer gym environment.", new List<string> { "General Liability", "Workers’ Compensation", "Professional Liability" }),
+        new InsurancePlan(3, "GymElite", 80m, "Premium Comprehensive", "Our highest level of protection, covering liability, equipment breakdown, and business interruptions, ensuring your gym is safeguarded from all angles for continuous peace of mind.", new List<string> { "General Liability", "Workers’ Compensation", "Professional Liability", "Business interruption insurance", "Commercial property insurance" })
     );
 
             modelBuilder.Entity<GymInsurance>()
