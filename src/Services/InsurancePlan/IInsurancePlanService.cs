@@ -9,5 +9,6 @@ namespace src.Services.InsurancePlan
         Task<List<InsurancePlanReadDto>> GetAllInsurancePlansAsync();
 
         Task<InsurancePlanReadDto> GetInsurancePlanByIdAsync(int id);
+        Task<List<InsurancePlanReadDto>> SearchInsurancePlansByCoverageType(string coverageType);
     }
 }

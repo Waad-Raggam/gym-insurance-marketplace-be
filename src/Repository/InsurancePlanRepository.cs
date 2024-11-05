@@ -25,5 +25,16 @@ namespace src.Repository
             return await _insurancePlan.FindAsync(id);
         }
 
+        public async Task<List<InsurancePlan>> SearchInsurancePlansByCoverageType(string coverageType)
+        {
+            var query = _insurancePlan.AsQueryable();
+
+            if (!string.IsNullOrEmpty(coverageType))
+            {
+                query = query.Where(plan => plan.CoverageDetails.Contains(coverageType));
+            }
+
+            return await query.ToListAsync();
+        }
     }
 }
