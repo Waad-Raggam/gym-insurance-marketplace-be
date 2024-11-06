@@ -37,6 +37,7 @@ namespace src.DTO
 
             [Required]
             [MinLength(8)]
+            [PasswordComplexityAttribute]
             [RegularExpression(
                 @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$",
                 ErrorMessage = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit."
