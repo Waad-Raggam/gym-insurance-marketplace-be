@@ -31,6 +31,20 @@ namespace src.Services.InsurancePlan
             }
             return _mapper.Map<Entity.InsurancePlan, InsurancePlanReadDto>(planFound);
         }
+        public async Task<List<InsurancePlanReadDto>> SearchInsurancePlansByCoverageType(string coverageType)
+        {
+            var plansFound = await _planRepo.SearchInsurancePlansByCoverageType(coverageType);
+
+            if (plansFound == null || !plansFound.Any())
+            {
+                // Return an empty list or handle this as needed
+                return new List<InsurancePlanReadDto>();
+            }
+
+            return _mapper.Map<List<Entity.InsurancePlan>, List<InsurancePlanReadDto>>(plansFound);
+        }
+
+
 
 public async Task<InsurancePlanReadDto> CreateInsurancePlanAsync(InsurancePlanCreateDto createDto)
 {

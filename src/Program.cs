@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Npgsql;
 using src.Database;
 using src.Entity;
@@ -34,7 +35,10 @@ var dataSourceBuilder = new NpgsqlDataSourceBuilder(
 dataSourceBuilder.MapEnum<Role>();
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
-    options.UseNpgsql(dataSourceBuilder.Build());
+    options.UseNpgsql(dataSourceBuilder.Build())
+    .EnableSensitiveDataLogging()
+    .ConfigureWarnings(warnings => 
+    warnings.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning));
 });
 
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
