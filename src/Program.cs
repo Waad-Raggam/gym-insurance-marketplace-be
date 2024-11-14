@@ -118,7 +118,7 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options => {
     options.AddPolicy(name: MyAllowSpecificOrigins,
     policy => {
-        policy.WithOrigins("http://localhost:3000").AllowAnyHeader()
+        policy.WithOrigins("http://localhost:3000", "https://gym-insurance-marketplace-fe.onrender.com").AllowAnyHeader()
         .AllowAnyMethod()
         .SetIsOriginAllowed((host)=>true)
         .AllowCredentials();
