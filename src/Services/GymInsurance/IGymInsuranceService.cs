@@ -12,6 +12,7 @@ namespace src.Repository
         Task<List<GymInsuranceReadDto>> GetAllAsync();
 
         Task<GymInsuranceReadDto> GetByIdAsync(Guid id);
+       Task<List<GymInsuranceReadDto>> GetByUserIdAsync(Guid userId);
 
         Task<bool> DeleteOneAsync(Guid id);
 

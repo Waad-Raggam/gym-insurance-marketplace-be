@@ -44,6 +44,18 @@ namespace src.Controllers
 
             return Ok(gymInsurance);
         }
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<List<GymInsuranceReadDto>>> GetByUserIdAsync(Guid userId)
+        {
+            var gyms = await _gymInsuranceService.GetByUserIdAsync(userId);
+
+            if (gyms == null || gyms.Count == 0)
+            {
+                return NotFound("No gyms found for the specified user.");
+            }
+
+            return Ok(gyms);
+        }
 
         [HttpPost]
         public async Task<ActionResult<GymInsuranceReadDto>> CreateGymInsurance([FromBody] GymInsuranceCreateDto createDto)

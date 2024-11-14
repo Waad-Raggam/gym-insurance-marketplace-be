@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using src.DTO;
 using src.Entity;
@@ -10,6 +11,10 @@ using src.Services.Gym;
 using src.Services.InsurancePlan;
 using static src.DTO.GymDTO;
 using static src.DTO.InsurancePlanDTO;
+using src.DTO;
+using src.Entity;
+using src.Repository;
+using src.Services;
 
 namespace src.Controllers
 {
@@ -62,6 +67,32 @@ namespace src.Controllers
 
             return Ok(plans);
         }
+
+
+        [HttpPost]
+        // [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<InsurancePlanReadDto>> CreateOnAsync([FromBody] InsurancePlanCreateDto createDto){
+            var planCreated = await _planService.CreateInsurancePlanAsync(createDto);
+            return Ok(planCreated);
+        }
+
+[HttpPut("{id}")]
+[Authorize(Roles = "Admin")]
+public async Task<ActionResult> UpdatePlanAsync(int id, [FromBody] InsurancePlanUpdateDto updateDto)
+{
+    var result = await _planService.UpdateInsurancePlanAsync(id, updateDto);
+    if (!result) return NotFound("Plan not found.");
+    return NoContent();
+}
+
+[HttpDelete("{id}")]
+// [Authorize(Roles = "Admin")]
+public async Task<ActionResult> DeletePlanAsync(int id)
+{
+    var result = await _planService.DeleteInsurancePlanAsync(id);
+    if (!result) return NotFound("Plan not found.");
+    return NoContent();
+}
 
     }
 }

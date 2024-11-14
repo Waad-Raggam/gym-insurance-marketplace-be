@@ -128,6 +128,10 @@ namespace src.Utils
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
            CreateMap<InsurancePlan, InsurancePlanReadDto>();
+CreateMap<InsurancePlanCreateDto, InsurancePlan>();
+            // Mapping from GymInsuranceUpdateDto to GymInsurance with a condition to map properties only if they are not null
+            CreateMap<InsurancePlanUpdateDto, InsurancePlan>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
            CreateMap<GymInsurance, GymInsuranceReadDto>();
             CreateMap<GymInsuranceCreateDto, GymInsurance>();

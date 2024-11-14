@@ -15,11 +15,14 @@ namespace src.Services.Gym
             _mapper = mapper;
         }
 
-        public async Task<GymReadDto> CreateOnAsync( GymCreateDto createDto)
+        public async Task<GymReadDto> CreateOnAsync(Guid userIdPassed, GymCreateDto createDto)
         {
             var gym = _mapper.Map<GymCreateDto, Entity.Gym>(createDto);
-            // gym.OrderId = userGuid; // Uncomment if user ID is needed
-            var gymCreated = await _gymRepo.CreateOnAsync(gym);
+            Guid userId = gym.UserId;
+            Console.WriteLine("Passed " + userIdPassed);
+            Console.WriteLine("Assigned " + userId);
+            // gym.UserId = userGuid; 
+            var gymCreated = await _gymRepo.CreateOnAsync(userId, gym);
             return _mapper.Map<Entity.Gym, GymReadDto>(gymCreated);
         }
 
@@ -39,6 +42,17 @@ namespace src.Services.Gym
             }
             return _mapper.Map<Entity.Gym, GymReadDto>(gymFound);
         }
+        public async Task<List<GymReadDto>> GetByUserIdAsync(Guid userId)
+        {
+            var gymsFound = await _gymRepo.GetByUserIdAsync(userId);
+            if (gymsFound == null || gymsFound.Count == 0)
+            {
+                // Handle not found case
+                return null; // or throw new NotFoundException("No gyms found for the specified user.");
+            }
+            return _mapper.Map<List<Entity.Gym>, List<GymReadDto>>(gymsFound);
+        }
+
 
         public async Task<bool> DeleteOneAsync(Guid id)
         {

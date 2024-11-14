@@ -5,11 +5,9 @@ using static src.DTO.InsurancePlanDTO;
 
 namespace src.Services.InsurancePlan
 {
-
     public class InsurancePlanService : IInsurancePlan
     {
         private readonly InsurancePlanRepository _planRepo;
-
         protected readonly IMapper _mapper;
 
         public InsurancePlanService(InsurancePlanRepository planRepo, IMapper mapper)
@@ -18,21 +16,18 @@ namespace src.Services.InsurancePlan
             _mapper = mapper;
         }
 
-        // Fetch all insurance plans
         public async Task<List<InsurancePlanReadDto>> GetAllInsurancePlansAsync()
         {
             var planList = await _planRepo.GetAllAsync();
             return _mapper.Map<List<Entity.InsurancePlan>, List<InsurancePlanReadDto>>(planList);
         }
 
-        // Fetch single insurance plan by Id
         public async Task<InsurancePlanReadDto> GetInsurancePlanByIdAsync(int id)
         {
             var planFound = await _planRepo.GetByIdAsync(id);
             if (planFound == null)
             {
-                // Handle not found case (could throw an exception or return null)
-                return null; // or throw new NotFoundException("Gym not found.");
+                return null; 
             }
             return _mapper.Map<Entity.InsurancePlan, InsurancePlanReadDto>(planFound);
         }
@@ -51,5 +46,40 @@ namespace src.Services.InsurancePlan
 
 
 
+public async Task<InsurancePlanReadDto> CreateInsurancePlanAsync(InsurancePlanCreateDto createDto)
+{
+    var plan = _mapper.Map<InsurancePlanCreateDto, Entity.InsurancePlan>(createDto);
+    await _planRepo.CreateAsync(plan); 
+    return _mapper.Map<Entity.InsurancePlan, InsurancePlanReadDto>(plan);
+}
+
+
+
+       public async Task<bool> UpdateInsurancePlanAsync(int id, InsurancePlanUpdateDto updateDto)
+    {
+        var plan = await _planRepo.GetByIdAsync(id);
+        if (plan == null)
+            return false;
+
+        plan.PlanName = updateDto.PlanName;
+        plan.MonthlyPremium = updateDto.MonthlyPremium;
+        // plan.CoverageType = updateDto.CoverageType;
+        plan.PlanDescription = updateDto.planDescription;
+        // plan.CoverageDetails = updateDto.CoverageDetails;
+
+        await _planRepo.UpdateAsync(plan); 
+
+        return true;
+    }
+
+    public async Task<bool> DeleteInsurancePlanAsync(int id)
+    {
+        var plan = await _planRepo.GetByIdAsync(id);
+        if (plan == null)
+            return false;
+
+        await _planRepo.DeleteAsync(plan);
+        return true;
+    }
     }
 }

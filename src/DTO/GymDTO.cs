@@ -35,12 +35,14 @@ namespace src.DTO
 
             public List<string> Facilities { get; set; } = new List<string>();
             public List<string> Services { get; set; } = new List<string>();
+            public Guid UserId { get; set; }
         }
 
         public class GymReadDto
         {
             // public Guid InsuranceId { get; set; }
             public Guid GymId { get; set; }
+            public Guid UserId { get; set; }
             public string GymName { get; set; }
             public string Location { get; set; }
             public string ContactName { get; set; }

@@ -25,16 +25,17 @@ namespace src.Controllers
         [HttpPost]
         public async Task<ActionResult<GymReadDto>> CreateOne([FromBody] GymCreateDto createDto)
         {
-            // // exact user information by token
-            // var authenticateClaims = HttpContext.User;
-            // // get user id by claims
-            // var UserId = authenticateClaims
-            //     .FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!
-            //     .Value;
-            // // string => Guid
-            // var userGuid = new Guid(UserId);
+            var authenticateClaims = HttpContext.User;
+            var UserId = authenticateClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            var gymCreated = await _gymService.CreateOnAsync(createDto);
+            if (UserId == null)
+            {
+                return Unauthorized("User ID not found in token.");
+            }
+
+            var userGuid = new Guid(UserId);
+
+            var gymCreated = await _gymService.CreateOnAsync(userGuid, createDto);
 
             if (gymCreated == null)
             {
@@ -43,6 +44,7 @@ namespace src.Controllers
 
             return Ok(gymCreated);
         }
+
 
         [HttpGet]
         public async Task<ActionResult<List<GymReadDto>>> GetAllGym()
@@ -70,7 +72,19 @@ namespace src.Controllers
             return Ok(gym);
         }
 
-        // TODO: Add more fields to update gym info
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<List<GymReadDto>>> GetByUserIdAsync(Guid userId)
+        {
+            var gyms = await _gymService.GetByUserIdAsync(userId);
+
+            if (gyms == null || gyms.Count == 0)
+            {
+                return NotFound("No gyms found for the specified user.");
+            }
+
+            return Ok(gyms);
+        }
+
         [HttpPut("{id}")]
         public async Task<ActionResult<GymReadDto>> UpdateGym(Guid id, [FromBody] GymUpdateDto updateDto)
         {

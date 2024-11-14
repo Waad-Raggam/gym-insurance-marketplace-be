@@ -60,11 +60,11 @@ namespace src.Database
                .OnDelete(DeleteBehavior.Cascade);
 
             // Configure InsurancePlan to GymInsurance relationship
-            modelBuilder.Entity<GymInsurance>()
-                .HasOne(gi => gi.InsurancePlan)
-                .WithMany() // TODO: specify a collection 
-                .HasForeignKey(gi => gi.InsuranceId)
-                .OnDelete(DeleteBehavior.Cascade);
+            // modelBuilder.Entity<GymInsurance>()
+            //     .HasOne(gi => gi.InsurancePlan)
+            //     .WithMany() // TODO: specify a collection 
+            //     .HasForeignKey(gi => gi.InsuranceId)
+            //     .OnDelete(DeleteBehavior.Cascade);
 
             // Define the Gym to GymInsurance relationship
             // modelBuilder.Entity<GymInsurance>()
