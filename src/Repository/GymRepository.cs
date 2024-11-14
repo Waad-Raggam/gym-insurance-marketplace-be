@@ -15,7 +15,7 @@ namespace src.Repository
             _gym = databaseContext.Set<Gym>();
         }
 
-        public async Task<Gym> CreateOnAsync(Gym newGym)
+        public async Task<Gym> CreateOnAsync(Guid userId, Gym newGym)
         {
             await _gym.AddAsync(newGym);
             await _databaseContext.SaveChangesAsync();
@@ -31,7 +31,10 @@ namespace src.Repository
         {
             return await _gym.FindAsync(id);
         }
-
+        public async Task<List<Gym>> GetByUserIdAsync(Guid userId)
+        {
+            return await _gym.Where(g => g.UserId == userId).ToListAsync();
+        }
         public async Task<bool> DeleteOnAsync(Gym gym)
         {
             _gym.Remove(gym);

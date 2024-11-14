@@ -69,6 +69,13 @@ namespace src.Services
             return _mapper.Map<GymInsurance, GymInsuranceReadDto>(gymInsuranceFound);
         }
 
+        public async Task<List<GymInsuranceReadDto>> GetByUserIdAsync(Guid userId)
+{
+    var gymInsurances = await _gymInsuranceRepo.GetByUserIdAsync(userId);
+    return _mapper.Map<List<GymInsuranceReadDto>>(gymInsurances);
+}
+    
+
         public async Task<bool> DeleteOneAsync(Guid id)
         {
             var gymInsuranceFound = await _gymInsuranceRepo.GetByIdAsync(id);

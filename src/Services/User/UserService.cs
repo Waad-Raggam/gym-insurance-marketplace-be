@@ -31,54 +31,50 @@ namespace src.Services.User
         }
 
         //SignUp
-        public async Task<UserReadDto?> CreateOneAsync(UserCreateDto createDto)
+         public async Task<UserReadDto?> CreateOneAsync(UserCreateDto createDto)
         {
             var foundUser = await _userRepo.FindByEmailAsync(createDto.Email);
             if (foundUser != null)
             {
-                return null;
+                throw new ArgumentException("User already exists.");
             }
-            else
-            {
-                PasswordUtils.HashPassword(
-                    createDto.Password,
-                    out string hashedPassword,
-                    out byte[] salt
-                );
 
-                var users = _mapper.Map<UserCreateDto, Users>(createDto);
+            PasswordUtils.HashPassword(createDto.Password, out string hashedPassword, out byte[] salt);
+            var user = _mapper.Map<UserCreateDto, Users>(createDto);
+            user.Password = hashedPassword;
+            user.Salt = salt;
+            user.Role = createDto.Role ?? Role.Customer;
 
-                users.Password = hashedPassword;
-                users.Salt = salt;
-                users.Role = Role.Customer;
-                // users.Role = Role.Admin;
-
-                var userCreated = await _userRepo.CreateOnAsync(users);
-                return _mapper.Map<Users, UserReadDto>(userCreated);
-            }
+            var createdUser = await _userRepo.CreateOnAsync(user);
+            return _mapper.Map<Users, UserReadDto>(createdUser);
         }
 
-        public async Task<string> LogInAsync(UserLoginDto createDto)
+       public async Task<string> LogInAsync(UserLoginDto loginDto)
         {
-            var foundUser = await _userRepo.FindByEmailAsync(createDto.Email);
-            var passwordMatched = PasswordUtils.VerifyPassword(
-                createDto.Password,
-                foundUser.Password,
-                foundUser.Salt
-            );
-            if (passwordMatched)
+            var foundUser = await _userRepo.FindByEmailAsync(loginDto.Email);
+            if (foundUser == null)
             {
-                var tokenUtil = new TokenUtils(_config);
-                return tokenUtil.GenerateToken(foundUser);
+                return "User not found.";
             }
-            return "Unauthorized";
+
+            var passwordMatched = PasswordUtils.VerifyPassword(loginDto.Password, foundUser.Password, foundUser.Salt);
+            if (!passwordMatched)
+            {
+                return "Unauthorized: Incorrect password.";
+            }
+ var tokenUtil = new TokenUtils(_config);
+            return tokenUtil.GenerateToken(foundUser);
         }
 
-        public async Task<bool> DeleteOneAsync(Guid userId)
+         public async Task<bool> DeleteOneAsync(Guid userId)
         {
             var foundUser = await _userRepo.GetByIdAsync(userId);
-            var isDeleted = await _userRepo.DeleteOnAsync(foundUser);
-            return isDeleted;
+            if (foundUser == null)
+            {
+                throw new ArgumentException("User not found.");
+            }
+
+            return await _userRepo.DeleteOnAsync(foundUser);
         }
 
         public async Task<List<UserReadDto>> GetAllAsync()

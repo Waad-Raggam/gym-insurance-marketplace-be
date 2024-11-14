@@ -37,5 +37,9 @@ namespace src.Entity
 
         public List<string> Facilities { get; set; } = new List<string>();
         public List<string> Services { get; set; } = new List<string>();
+
+        public Guid UserId { get; set; } // Foreign key
+        public Users User { get; set; } // Navigation property to Gym
+
     }
 }

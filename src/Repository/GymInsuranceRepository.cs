@@ -22,6 +22,7 @@ namespace src.Repository
             return newGymInsurance;
         }
 
+
         public async Task<List<GymInsurance>> GetAllAsync()
         {
             return await _gymInsurance.ToListAsync();
@@ -31,6 +32,12 @@ namespace src.Repository
         {
             return await _gymInsurance.FindAsync(id);
         }
+       public async Task<List<GymInsurance>> GetByUserIdAsync(Guid userId)
+{
+    return await _gymInsurance
+                 .Where(g => g.UserId == userId)
+                 .ToListAsync();
+}
 
         public async Task<bool> DeleteOnAsync(GymInsurance gymInsurance)
         {

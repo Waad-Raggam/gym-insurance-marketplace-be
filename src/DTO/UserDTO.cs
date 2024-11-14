@@ -43,6 +43,7 @@ namespace src.DTO
                 ErrorMessage = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit."
             )]
             public string Password { get; set; }
+            public Role? Role { get; set; } 
         }
 
         public class UserReadDto //for Admin
@@ -103,6 +104,8 @@ namespace src.DTO
                 ErrorMessage = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit."
             )]
             public string Password { get; set; }
+
+            public Role Role { get; set; }
 
             public ICollection<AddressReadDto> Addresses { get; set; } = new List<AddressReadDto>();
         }
