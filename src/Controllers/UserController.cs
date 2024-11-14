@@ -81,7 +81,7 @@ namespace src.Controllers
 
         [HttpGet]
         [Authorize] // --> For All users
-        // [Authorize(Roles ="Admin")] //--> For admins
+                    // [Authorize(Roles ="Admin")] //--> For admins
         public async Task<ActionResult<List<UserReadDto>>> GetAllAsync()
         {
             var users = await _userService.GetAllAsync();
@@ -164,6 +164,28 @@ namespace src.Controllers
             }
 
             return Ok(isUpdated);
+        }
+
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> DeleteUser(Guid userId)
+        {
+            try
+            {
+                var result = await _userService.DeleteOneAsync(userId);
+                if (result)
+                {
+                    return NoContent();
+                }
+                return NotFound();
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

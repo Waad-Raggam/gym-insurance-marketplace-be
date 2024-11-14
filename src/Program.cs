@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Npgsql;
 using src.Database;
 using src.Entity;
@@ -22,6 +23,9 @@ using src.Utils;
 //using src.Services.OrderGemstone;
 using src.Services.Order;
 using src.Middlewares;
+using src.Services.Gym;
+using src.Services.InsurancePlan;
+using src.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +35,10 @@ var dataSourceBuilder = new NpgsqlDataSourceBuilder(
 dataSourceBuilder.MapEnum<Role>();
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
-    options.UseNpgsql(dataSourceBuilder.Build());
+    options.UseNpgsql(dataSourceBuilder.Build())
+    .EnableSensitiveDataLogging()
+    .ConfigureWarnings(warnings => 
+    warnings.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning));
 });
 
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
@@ -91,6 +98,32 @@ builder.Services
     .AddScoped<IOrderService, OrderService>()
     .AddScoped<OrderRepository, OrderRepository>();
 
+//Gym
+builder.Services
+    .AddScoped<IGymService, GymService>()
+    .AddScoped<GymRepository, GymRepository>();
+
+//Insurance plan
+builder.Services
+    .AddScoped<IInsurancePlan, InsurancePlanService>()
+    .AddScoped<InsurancePlanRepository, InsurancePlanRepository>();
+
+//Gym Insurance plan
+builder.Services
+    .AddScoped<IGymInsuranceService, GymInsuranceService>()
+    .AddScoped<GymInsuranceRepository, GymInsuranceRepository>();
+
+//CORS
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options => {
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+    policy => {
+        policy.WithOrigins("http://localhost:3000", "https://gym-insurance-marketplace-fe.onrender.com").AllowAnyHeader()
+        .AllowAnyMethod()
+        .SetIsOriginAllowed((host)=>true)
+        .AllowCredentials();
+    });
+});
 
 builder
     .Services.AddAuthentication(options =>
@@ -114,12 +147,19 @@ builder
         };
     });
 
+builder.Services.AddAuthorization(options=>{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+});
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseCors(MyAllowSpecificOrigins);
+app.UseAuthentication();
+app.UseAuthorization();
 
 using (var scope = app.Services.CreateScope())
 {

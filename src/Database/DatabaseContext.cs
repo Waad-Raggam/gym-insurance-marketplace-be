@@ -26,6 +26,9 @@ namespace src.Database
         public DbSet<Gemstones> Gemstones { get; set; }
         public DbSet<Jewelry> Jewelry { get; set; }
         public DbSet<Payment> Payment { get; set; }
+        public DbSet<Gym> Gym { get; set; }
+        public DbSet<InsurancePlan> InsurancePlan { get; set; }
+        public DbSet<GymInsurance> GymInsurance { get; set; }
 
         // public DbSet<PaymentCard> PaymentCard { get; set; }
 
@@ -43,6 +46,64 @@ namespace src.Database
                 .WithOne(o => o.Payment)
                 .HasForeignKey<Payment>(p => p.OrderId);
             modelBuilder.HasPostgresEnum<Role>();
+
+            modelBuilder.Entity<InsurancePlan>().HasData(
+        new InsurancePlan(1, "GymBasic", 30m, "Basic Coverage", "Designed to cover essential liabilities, offering peace of mind for everyday operations so you can focus on training.", new List<string> { "General Liability Insurance", "Workers’ Compensation Insurance" }),
+        new InsurancePlan(2, "GymStandard", 50m, "Comprehensive Coverage", "Provides comprehensive liability coverage for both general and professional risks, plus options to protect your equipment and more for a safer gym environment.", new List<string> { "General Liability Insurance", "Workers’ Compensation Insurance", "Professional Liability Insurance" }),
+        new InsurancePlan(3, "GymElite", 80m, "Premium Comprehensive", "Our highest level of protection, covering liability, equipment breakdown, and business interruptions, ensuring your gym is safeguarded from all angles for continuous peace of mind.", new List<string> { "General Liability Insurance", "Workers’ Compensation Insurance", "Professional Liability Insurance", "Business Interruption Insurance", "Commercial Property Insurance" })
+    );
+
+            modelBuilder.Entity<GymInsurance>()
+               .HasOne(gi => gi.Gym)
+               .WithMany() // TODO: specify a collection in Gym
+               .HasForeignKey(gi => gi.GymId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure InsurancePlan to GymInsurance relationship
+            // modelBuilder.Entity<GymInsurance>()
+            //     .HasOne(gi => gi.InsurancePlan)
+            //     .WithMany() // TODO: specify a collection 
+            //     .HasForeignKey(gi => gi.InsuranceId)
+            //     .OnDelete(DeleteBehavior.Cascade);
+
+            // Define the Gym to GymInsurance relationship
+            // modelBuilder.Entity<GymInsurance>()
+            //     .HasOne(gi => gi.Gym)
+            //     .WithMany() // or .WithMany(g => g.GymInsurances) if Gym has a collection of GymInsurances
+            //     .HasForeignKey(gi => gi.GymId)
+            //     .OnDelete(DeleteBehavior.Cascade);
+
+            // modelBuilder.Entity<GymInsurance>()
+            //     .HasOne(gi => gi.InsurancePlan)
+            //     .WithMany() // or .WithMany(g => g.GymInsurances) if Gym has a collection of GymInsurances
+            //     .HasForeignKey(gi => gi.InsurancePlanId)
+            //     .OnDelete(DeleteBehavior.Cascade);
+
+            // modelBuilder.Entity<InsurancePlan>().HasData(
+            //    new InsurancePlan
+            //    {
+            //        Id = 1,
+            //        PlanName = "Basic Plan",
+            //        MonthlyPremium = 30.00m,
+            //        CoverageType = "Basic Coverage",
+            //        CoverageDetails = "Accidental injuries, Limited access to gym facilities, 24/7 customer support"
+            //    },
+            //    new InsurancePlan
+            //    {
+            //        Id = 2,
+            //        PlanName = "Standard Plan",
+            //        MonthlyPremium = 50.00m,
+            //        CoverageType = "Comprehensive Coverage",
+            //        CoverageDetails = "Accidental injuries, Gym facility access, Personal trainer sessions, Nutrition consultations, 24/7 customer support"
+            //    },
+            //    new InsurancePlan
+            //    {
+            //        Id = 3,
+            //        PlanName = "Premium Plan",
+            //        MonthlyPremium = 80.00m,
+            //        CoverageType = "Premium Comprehensive",
+            //        CoverageDetails = "Accidental injuries, Gym facility access, Unlimited personal trainer sessions, Nutrition consultations, Mental health support, Specialized fitness programs, 24/7 customer support"
+            //    });
         }
     } // end class
 } // end namespace

@@ -9,6 +9,8 @@ using static src.DTO.AddressDTO;
 using static src.DTO.CartDTO;
 using static src.DTO.CategoryDTO;
 using static src.DTO.GemstonesDTO;
+using static src.DTO.GymDTO;
+using static src.DTO.InsurancePlanDTO;
 using static src.DTO.JewelryDTO;
 using static src.DTO.OrderDTO;
 using static src.DTO.OrderGemstoneDTO;
@@ -116,6 +118,28 @@ namespace src.Utils
             // Mapping from OrderGemstoneUpdateDto to OrderGemstone with a condition to map properties only if they are not null
             CreateMap<OrderGemstoneUpdateDto, OrderGemstone>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+                 // OrderGemstone mappings
+
+            CreateMap<Gym, GymReadDto>();
+            CreateMap<GymCreateDto, Gym>();
+            // Mapping from GymUpdateDto to Gym with a condition to map properties only if they are not null
+            CreateMap<GymUpdateDto, Gym>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+           CreateMap<InsurancePlan, InsurancePlanReadDto>();
+CreateMap<InsurancePlanCreateDto, InsurancePlan>();
+            // Mapping from GymInsuranceUpdateDto to GymInsurance with a condition to map properties only if they are not null
+            CreateMap<InsurancePlanUpdateDto, InsurancePlan>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+           CreateMap<GymInsurance, GymInsuranceReadDto>();
+            CreateMap<GymInsuranceCreateDto, GymInsurance>();
+            // Mapping from GymInsuranceUpdateDto to GymInsurance with a condition to map properties only if they are not null
+            CreateMap<GymInsuranceUpdateDto, GymInsurance>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+
         }
     } // end class
 } // end namespace
