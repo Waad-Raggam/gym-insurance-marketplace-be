@@ -25,5 +25,23 @@ namespace src.Repository
             return await _insurancePlan.FindAsync(id);
         }
 
+        public async Task CreateAsync(InsurancePlan plan)
+{
+    await _insurancePlan.AddAsync(plan);
+    await _databaseContext.SaveChangesAsync();
+}
+
+
+public async Task UpdateAsync(InsurancePlan plan)
+{
+    _insurancePlan.Update(plan);  
+    await _databaseContext.SaveChangesAsync();
+}
+
+        public async Task DeleteAsync(InsurancePlan plan)
+        {
+            _insurancePlan.Remove(plan);
+            await _databaseContext.SaveChangesAsync();
+        }
     }
 }

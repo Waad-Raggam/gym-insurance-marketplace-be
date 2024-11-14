@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using src.Entity;
 
@@ -13,10 +12,16 @@ namespace src.Utils
     public class TokenUtils
     {
         private readonly IConfiguration _config;
+        private readonly SymmetricSecurityKey _key;
+        private readonly string _issuer;
+        private readonly string _audience;
 
         public TokenUtils(IConfiguration config)
         {
             _config = config;
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value));
+            _issuer = _config.GetSection("Jwt:Issuer").Value;
+            _audience = _config.GetSection("Jwt:Audience").Value;
         }
 
         public string GenerateToken(Users user)
@@ -28,23 +33,13 @@ namespace src.Utils
                 new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
-            var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value)
-            );
-
-            var signingCredentials = new SigningCredentials(
-                key,
-                SecurityAlgorithms.HmacSha256Signature
-            );
-
-            var issuer = _config.GetSection("Jwt:Issuer").Value;
-            var audience = _config.GetSection("Jwt:Audience").Value;
+            var signingCredentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256Signature);
 
             var descriptor = new SecurityTokenDescriptor
             {
-                Issuer = issuer,
-                Audience = audience,
-                Expires = DateTime.Now.AddMinutes(60),
+                Issuer = _issuer,
+                Audience = _audience,
+                Expires = DateTime.UtcNow.AddMinutes(60),
                 Subject = new ClaimsIdentity(claims),
                 SigningCredentials = signingCredentials,
             };

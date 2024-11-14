@@ -13,11 +13,11 @@ namespace src.Entity
         public bool IsActive { get; set; }
 
         // Foreign key for Gym
-        public Guid GymId { get; set; } // Foreign key
-        public Gym Gym { get; set; } // Navigation property to Gym
-
-        // Foreign key for Plan
-        public int InsuranceId { get; set; } // Foreign key
-        public InsurancePlan InsurancePlan { get; set; } // Navigation property to Gym
+        public Guid GymId { get; set; }
+        public Gym Gym { get; set; }
+        public Guid UserId { get; set; }
+        public Users User { get; set; }
+        public List<int> InsuranceIds { get; set; }
     }
+
 }

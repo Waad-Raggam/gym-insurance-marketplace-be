@@ -15,6 +15,9 @@ namespace src.Entity
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
+
+        [Required]
+        [PasswordComplexityAttribute]
         public string Password { get; set; }
         public ICollection<Address> Addresses { get; } = new List<Address>();
         public Cart? Cart { get; set; }
