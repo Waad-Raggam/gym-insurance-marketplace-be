@@ -55,6 +55,20 @@ namespace src.Controllers
             return Ok(plan);
         }
 
+        [HttpGet("name")]
+        public async Task<IActionResult> SearchByCoverage([FromQuery] string coverageType)
+        {
+            var plans = await _planService.SearchInsurancePlansByCoverageType(coverageType);
+
+            if (plans == null || !plans.Any())
+            {
+                return NotFound("No insurance plans match the specified coverage.");
+            }
+
+            return Ok(plans);
+        }
+
+
         [HttpPost]
         // [Authorize(Roles = "Admin")]
         public async Task<ActionResult<InsurancePlanReadDto>> CreateOnAsync([FromBody] InsurancePlanCreateDto createDto){

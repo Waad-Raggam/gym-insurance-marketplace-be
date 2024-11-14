@@ -11,6 +11,7 @@ namespace src.Services.InsurancePlan
     Task<InsurancePlanReadDto> CreateInsurancePlanAsync(InsurancePlanCreateDto createDto);
     Task<bool> UpdateInsurancePlanAsync(int id, InsurancePlanUpdateDto updateDto); 
     Task<bool> DeleteInsurancePlanAsync(int id); 
+        Task<List<InsurancePlanReadDto>> SearchInsurancePlansByCoverageType(string coverageType);
 }
 
 }
